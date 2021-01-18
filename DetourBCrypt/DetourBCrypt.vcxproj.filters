@@ -30,9 +30,6 @@
     <ClInclude Include="memoryprotections.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bcryptencrypt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="detourer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,15 +48,15 @@
     <ClInclude Include="comms.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="crypto.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="detourer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="bcryptencrypt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="virtualalloc.cpp">
@@ -75,6 +72,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crypto.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

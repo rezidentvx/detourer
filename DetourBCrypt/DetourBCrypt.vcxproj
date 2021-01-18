@@ -112,7 +112,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>bcrypt.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bcrypt.lib;ncrypt.lib;crypt32.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>bcrypt.lib</ImportLibrary>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>
@@ -136,7 +136,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>bcrypt.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bcrypt.lib;ncrypt.lib;crypt32.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>bcrypt.lib</ImportLibrary>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <LinkTimeCodeGeneration>
@@ -164,7 +164,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <ImportLibrary>bcrypt.lib</ImportLibrary>
-      <AdditionalDependencies>bcrypt.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bcrypt.lib;ncrypt.lib;crypt32.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
@@ -189,14 +189,14 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
       <ImportLibrary>bcrypt.lib</ImportLibrary>
-      <AdditionalDependencies>bcrypt.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bcrypt.lib;ncrypt.lib;crypt32.lib;$(SolutionDir)\Includes\Detours\detours-$(PlatformTarget).lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Includes\detours.h" />
     <ClInclude Include="..\Includes\detver.h" />
-    <ClInclude Include="bcryptencrypt.h" />
+    <ClInclude Include="crypto.h" />
     <ClInclude Include="comms.h" />
     <ClInclude Include="detourer.h" />
     <ClInclude Include="detourerconfig.h" />
@@ -208,7 +208,7 @@
     <ClInclude Include="writefile.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bcryptencrypt.cpp" />
+    <ClCompile Include="crypto.cpp" />
     <ClCompile Include="comms.cpp" />
     <ClCompile Include="detourer.cpp" />
     <ClCompile Include="dllmain.cpp" />

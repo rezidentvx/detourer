@@ -6,6 +6,7 @@ using namespace std;
 // maximum mumber of lines the output console should have
 static const WORD MAX_CONSOLE_LINES = 500;
 #ifdef _DEBUG
+// TODO: Wrap this in a class with a destructor that frees the console.
 void RedirectIOToConsole()
 {
     int hConHandle;

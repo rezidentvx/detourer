@@ -4,17 +4,13 @@
 #include "util.h"
 
 #include "virtualalloc.h"
-#include "bcryptencrypt.h"
+#include "crypto.h"
 #include "writefile.h"
 
-#define TRYATTACH(FUNC) TRY(Attach##FUNC())
-#define TRYDETACH(FUNC) TRY(Detach##FUNC())
-
-// An attempt at making added modules (e.g., writefile.h) even more lightweight
-//#define TRYATTACH(FUNC) TRY(Attach(FUNC))
-//#define TRYDETACH(FUNC) TRY(Detach(FUNC))
-//#define Attach(FUNC) DetourDetach(&(PVOID&)Real_##FUNC, Hooked##FUNC);
-//#define Detach(FUNC) DetourDetach(&(PVOID&)Real_##FUNC, Hooked##FUNC);
+#define TRYATTACH(FUNC) TRY(ATTACH(FUNC))
+#define TRYDETACH(FUNC) TRY(DETACH(FUNC))
+#define ATTACH(FUNC) DetourAttach(&(PVOID&)Real_##FUNC, Hooked##FUNC)
+#define DETACH(FUNC) DetourDetach(&(PVOID&)Real_##FUNC, Hooked##FUNC)
 
 namespace Detourer {
     BOOL Init();

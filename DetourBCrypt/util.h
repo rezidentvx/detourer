@@ -43,7 +43,7 @@
 #endif
 
 int TRY1(int retval, LPCWSTR operation);
-#define TRY_2(OPERATION, FUNC) TRY_1((OPERATION##FUNC())) //TRY_1(CAT(OPERATION,CAT(FUNC, STR(())))
+#define TRY_2(OPERATION, FUNC) TRY_1(OPERATION##FUNC()) //TRY_1(CAT(OPERATION,CAT(FUNC, STR(())))
 
 //inline BOOL Test(int val) { // Shouldn't #define Test(val) (val) == NO_ERROR Because macros are bad
 //    return val == NO_ERROR;
