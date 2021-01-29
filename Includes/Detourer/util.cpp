@@ -1,6 +1,6 @@
 #include "util.h"
 
-int TRY1(int retval, LPCWSTR operation) {
+int TRY1(int retval, LPCTSTR operation) {
     if (retval != NO_ERROR) {
         OUT_FAIL(operation);
         TRY_ASSERT_SUCCESS();
@@ -8,22 +8,22 @@ int TRY1(int retval, LPCWSTR operation) {
     return true;
 }
 
-void OUT_MB(LPCWSTR message, LPCWSTR header) {
+void OUT_MB(LPCTSTR message, LPCTSTR header) {
     MessageBox(HWND_DESKTOP, message, header, MB_OK);
 }
 
 #ifdef _DEBUG
-void OUT_DEBUG(LPCWSTR message, LPCWSTR header) {
+void OUT_DEBUG(LPCTSTR message, LPCTSTR header) {
     OUT_MB(message, header);
 }
 
-void OUT_FAIL(LPCWSTR operation, LPCWSTR location) {
-    std::wstring message = L"Failed to ";
+void OUT_FAIL(LPCTSTR operation, LPCTSTR location) {
+    std::tstring message = TEXT("Failed to ");
     message += operation;
 
-    std::wstring header(L"FAIL");
+    std::tstring header(TEXT("FAIL"));
     if (location) {
-        header += L": ";
+        header += TEXT(": ");
         header += location;
     }
 
@@ -35,9 +35,8 @@ HMODULE GetModuleAtAddress(LPVOID addr) {
     /// Get list of modules in process
     std::vector<HMODULE> hModules;
     DWORD cbNeeded;
-    std::array<HMODULE, 1024> hModuleArr;
+    std::array<HMODULE, 1024> hModuleArr{ 0 };
     if (!EnumProcessModulesEx(GetCurrentProcess(), hModuleArr.data(), (DWORD)hModuleArr.size() * sizeof(HMODULE), &cbNeeded, LIST_MODULES_DEFAULT)) {
-        //OUT_DEBUG(L"EnumProcessModulesEx", L"GetModuleAtAddress ERROR");
         OUT_FAIL(L"EnumProcessModulesEx", L"GetModuleAtAddress");
         return NULL;
     }

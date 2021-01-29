@@ -3,5 +3,5 @@
 #include <windef.h>
 #include <WinUser.h>
 
-#include "util.h"
-#include "detourer.h"
+#include <util.h>
+#include <detourer.h>

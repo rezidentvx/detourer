@@ -1,7 +1,4 @@
 #include "crypto.h"
-#include <sstream>
-#include <iomanip>
-#include <iostream>
 
 // Address of the real BCryptEncrypt
 NTSTATUS(WINAPI* Real_BCryptEncrypt)(BCRYPT_KEY_HANDLE, PUCHAR, ULONG, VOID*, PUCHAR, ULONG, PUCHAR, ULONG, ULONG*, ULONG) = BCryptEncrypt;
@@ -51,6 +48,10 @@ NTSTATUS WINAPI HookedBCryptEncrypt(BCRYPT_KEY_HANDLE hKey, PUCHAR pbInput, ULON
     return Real_BCryptEncrypt(hKey, pbInput, cbInput, pPaddingInfo, pbIV, cbIV, pbOutput, cbOutput, pcbResult, dwFlags);
 }
 
+namespace { Detourer::Module m(Real_BCryptEncrypt, HookedBCryptEncrypt); }
+
+// Currently not implemented
+/*
 NTSTATUS(WINAPI* Real_NCryptEncrypt)(NCRYPT_KEY_HANDLE, PBYTE, DWORD, VOID*, PBYTE, DWORD, DWORD*, DWORD) = NCryptEncrypt;
 
 NTSTATUS WINAPI HookedNCryptEncrypt(NCRYPT_KEY_HANDLE hKey, PBYTE pbInput, DWORD cbInput, VOID* pPaddingInfo, PBYTE pbOutput, DWORD cbOutput, DWORD* pcbResult, DWORD dwFlags) {
@@ -61,7 +62,7 @@ NTSTATUS WINAPI HookedNCryptEncrypt(NCRYPT_KEY_HANDLE hKey, PBYTE pbInput, DWORD
     //key.push_back('\0');
 
     std::ofstream f("C:\\Users\\Guest User12\\Desktop\\ncryptencrypt.txt", std::ios::out | std::ios::app);
-    f << "[+] Intercepted encrypt of " << input.data() << /*" with key " << hKey << ", IV " << key.data() <<*/ std::endl;
+    f << "[+] Intercepted encrypt of " << input.data() << " with key " << hKey << ", IV " << key.data() << std::endl;
     return Real_NCryptEncrypt(hKey, pbInput, cbInput, pPaddingInfo, pbOutput, cbOutput, pcbResult, dwFlags);
 }
 
@@ -75,7 +76,7 @@ BOOL WINAPI HookedCryptEncrypt(HCRYPTKEY hKey, HCRYPTHASH hHash, BOOL Final, DWO
     //key.push_back('\0');
 
     std::ofstream f("C:\\Users\\Guest User12\\Desktop\\cryptencrypt.txt", std::ios::out | std::ios::app);
-    f << "[+] Intercepted encrypt of " << input.data() /*<< " with key " << hKey << ", IV " << key.data()*/ << std::endl;
+    f << "[+] Intercepted encrypt of " << input.data() << " with key " << hKey << ", IV " << key.data() << std::endl;
     return Real_CryptEncrypt(hKey, hHash, Final, dwFlags, pbData, pdwDataLen, dwBufLen);
 }
 
@@ -90,6 +91,7 @@ BOOL WINAPI HookedCryptEncryptMessage(PCRYPT_ENCRYPT_MESSAGE_PARA pEncryptPara, 
     input.push_back('\0');
 
     std::ofstream f("C:\\Users\\Guest User12\\Desktop\\cryptencryptmessage.txt", std::ios::out | std::ios::app);
-    f << "[+] Intercepted encrypt of " << input.data() << /*" with key " << hKey << ", IV " << key.data() <<*/ std::endl;
+    f << "[+] Intercepted encrypt of " << input.data() << " with key " << hKey << ", IV " << key.data() << std::endl;
     return Real_CryptEncryptMessage(pEncryptPara, cRecipientCert, rgpRecipientCert, pbToBeEncrypted, cbToBeEncrypted, pbEncryptedBlob, pcbEncryptedBlob);
 }
+*/

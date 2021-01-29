@@ -1,4 +1,5 @@
 #pragma once
+#ifdef _DEBUG
 #include <iostream>
 #include <fstream>
 #include <windows.h>
@@ -6,3 +7,5 @@
 #include <fcntl.h> // _O_TEXT
 
 void RedirectIOToConsole();
+
+#endif
