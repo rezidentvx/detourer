@@ -9,9 +9,9 @@
     <ClInclude Include="$(SolutionDir)\Includes\Detourer\util.h" />
   </ItemGroup>
   <ItemGroup Label="Source">
-    <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourer.cpp" />
+    <!--<ClCompile Include="$(SolutionDir)\Includes\Detourer\detourer.cpp" />-->
     <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourermodule.cpp" />
-    <ClCompile Include="$(SolutionDir)\Includes\Detourer\util.cpp" />
+    <!--<ClCompile Include="$(SolutionDir)\Includes\Detourer\util.cpp" />-->
   </ItemGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)\properties\Link-Detours.props" />

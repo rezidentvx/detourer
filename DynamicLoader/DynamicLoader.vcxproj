@@ -34,6 +34,8 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ShowIncludes>true</ShowIncludes>
+      <PrecompiledHeaderFile>main.h</PrecompiledHeaderFile>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
@@ -45,17 +47,18 @@
 	</ComputeCompileInputsTargets>
   </PropertyGroup>
   <ItemGroup Label="Headers">
-    <_WildCardClInclude Include="modules\*.h" />
+    <_WildCardClInclude Include="modules\payloads\build\*.h" />
+    <_WildCardClInclude Include="modules\wrappers\build\*.h" />
     <ClInclude Include="comms.h" />
     <ClInclude Include="detourerconfig.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="memoryprotections.h" />
   </ItemGroup>
   <ItemGroup Label="Source">
-    <_WildCardClCompile Include="modules\*.cpp" />
+    <_WildCardClCompile Include="modules\wrappers\build\*.cpp" />
+    <_WildCardClCompile Include="modules\payloads\build\*.cpp" />
     <ClCompile Include="comms.cpp" />
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="memoryprotections.cpp" />
   </ItemGroup>
   <Target Name="AddWildCardItems" AfterTargets="BuildGenerateSources">
     <ItemGroup>

@@ -1,4 +1,4 @@
 #pragma once
-#include <windows.h>
+#include <Windows.h>
 #include <Detours\detver.h>
 #include <Detours\detours.h>

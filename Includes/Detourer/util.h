@@ -2,59 +2,115 @@
 #include <detourerconfig.h>
 #include <windows.h>
 #include <Psapi.h> // GetModuleInformation
-#include <libloaderapi.h> // GetModuleFileName
 #include <string>
-#include <vector>
-#include <array>
-//#include <winerror.h>
-//#include <WinUser.h>
 
 namespace std {
-	#ifdef UNICODE
-		typedef wstring tstring;
-	#else
-		typedef string tstring;
-	#endif
+#ifdef UNICODE
+	typedef wstring tstring;
+#else
+	typedef string tstring;
+#endif
 }
-// Stringizing
-#define _CAT(A, B) A ## B
-#define CAT(A, B) _CAT(A, B)
 
-// Select overloaded macro
-#define SELECT( NAME, NUM ) CAT( NAME ## _, NUM )
-#define GET_COUNT( _1, _2, _3, _4, _5, _6, COUNT, ... ) COUNT
-#define VA_SIZE( ... ) GET_COUNT( __VA_ARGS__, 6, 5, 4, 3, 2, 1 )
-#define VA_SELECT( NAME, ... ) SELECT( NAME, VA_SIZE(__VA_ARGS__) )(__VA_ARGS__)
-
-#define TRY(...) VA_SELECT(TRY, __VA_ARGS__)
+//TRY only provides useful debugging messages when debugging
+//Also avoids adding strings to the binary
+#ifdef _DEBUG
+#define DBGTEXT(text) TEXT(text)
+#else
+#define DBGTEXT(text) nullptr
+#endif
 
 // If an attempt fails...
-#if ASSERT_SUCCESS_LEVEL == 2 // Generate an exception in the caller
-#define TRY_ASSERT_SUCCESS(...) throw
-#define TRY_1(OPERATION) TRY1(OPERATION, TEXT(#OPERATION));
+#if ASSERT_SUCCESS_LEVEL == 2 // throw caller
+#define TRY_ASSERT_SUCCESS(...) throw // Throw if bad return value
+#define TRY(OPERATION, desVal) TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)) // Allow caller to throw
 
-#elif ASSERT_SUCCESS_LEVEL == 1 // Make the caller return false (DANGEROUS if false is a bad return value in caller) by catching a throw to return false
-#define TRY_ASSERT_SUCCESS(...) throw
-#define TRY_1(OPERATION) try { TRY1(OPERATION, TEXT(#OPERATION)); } catch (...) { return false; }
+#elif ASSERT_SUCCESS_LEVEL == 1 // Make the caller return true (DANGEROUS if true is a bad return value in caller) by catching a throw to return true
+#define TRY_ASSERT_SUCCESS(...) throw // Throw if bad return value
+#define TRY(OPERATION, desVal) try { TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)); } catch (...) { return true; } // Caller returns true, can't throw
 
-#else // Act like it never happened & carry on
-#define TRY_ASSERT_SUCCESS(...) (void)0
+#else // Act like it never happened & let caller handle it
+#define TRY_ASSERT_SUCCESS(...) return true // Return that there was an error (true)
+#define TRY(OPERATION, desVal) try { TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)); } catch (...) {} // Caller carries on, can't throw
 #endif
-
-int TRY1(int retval, LPCTSTR operation);
-#define TRY_2(OPERATION, FUNC) TRY_1(OPERATION##FUNC()) //TRY_1(CAT(OPERATION,CAT(FUNC, STR(())))
-
-void OUT_MB(LPCTSTR message, LPCTSTR header);
 
 #ifdef _DEBUG
-void OUT_DEBUG(LPCTSTR message, LPCTSTR header);
-void OUT_FAIL(LPCTSTR operation, LPCTSTR location = TEXT(""));
+
+__forceinline void DBG_MBA(LPCSTR message = "", LPCSTR header = "") {
+	MessageBoxA(HWND_DESKTOP, message, header, MB_OK);
+}
+
+__forceinline void DBG_MB(LPCTSTR message = TEXT(""), LPCTSTR header = TEXT("")) {
+	MessageBox(HWND_DESKTOP, message, header, MB_OK);
+}
+
+__forceinline void DBG_FAIL(LPCTSTR operation = TEXT(""), LPCTSTR location = TEXT("")) {
+	std::tstring message = std::tstring(TEXT("Failed to ")) + std::tstring(operation);
+	std::tstring header(TEXT("FAIL"));
+	if (location)
+		header += std::tstring(TEXT(": ")) + std::tstring(location);
+
+	DBG_MB(message.c_str(), header.c_str());
+}
 #else
-#define OUT_DEBUG(...) (void)0
-#define OUT_FAIL(...) (void)0
+#define DBG_MBA(...) (void)0
+#define DBG_MB(...) (void)0
+#define DBG_FAIL(...) (void)0
 #endif
 
-// Somewhere in this stack, Debug builds are unable to resolve the module name from pointer
+template<typename T>
+__forceinline bool TRY1(T retVal, T desVal, LPCTSTR operation = DBGTEXT("")) {
+	if (retVal != desVal) {
+		DBG_FAIL(operation);
+		TRY_ASSERT_SUCCESS();
+	}
+	return false;
+}
+
+inline std::string ToHexStr(LPBYTE pData, size_t cbData) {
+	char* buf = new char[cbData * 2 + 1];
+	char* ptr = &buf[0];
+	for (UINT i = 0; i < cbData; i++) {
+		ptr += sprintf(ptr, "%02X", pData[i]);
+	}
+	return buf;
+}
+
 HMODULE GetModuleAtAddress(LPVOID addr);
 std::string GetModuleNameStr(LPVOID addr);
 std::string GetModuleNameStr(HMODULE hmod);
+
+inline HMODULE GetModuleAtAddress(LPVOID addr) {
+    /// Get list of modules in process
+    DWORD cbNeeded;
+    HMODULE hModuleArr[1024];
+    if (!EnumProcessModulesEx(GetCurrentProcess(), hModuleArr, 1024UL * sizeof(HMODULE), &cbNeeded, LIST_MODULES_DEFAULT)) {
+        DBG_FAIL(L"EnumProcessModulesEx", L"GetModuleAtAddress");
+        return NULL;
+    }
+
+    HMODULE hModule;
+    MODULEINFO minfo;
+    for (SIZE_T i = 0; i <= cbNeeded / sizeof(HMODULE); i++) {
+        hModule = hModuleArr[i];
+
+        GetModuleInformation(GetCurrentProcess(), hModule, std::addressof(minfo), sizeof(minfo));
+
+        if (addr > minfo.lpBaseOfDll && (uintptr_t)addr < (uintptr_t)minfo.lpBaseOfDll + minfo.SizeOfImage)
+            return hModule;
+    }
+    return NULL;
+}
+
+inline auto GetModuleNameStr(LPVOID addr) -> std::string {
+    HMODULE hmod = GetModuleAtAddress(addr);
+    return GetModuleNameStr(hmod);
+}
+
+inline std::string GetModuleNameStr(HMODULE hmod) {
+    char moduleName[1024];
+    if (!hmod || !GetModuleFileNameA(hmod, moduleName, 1024))
+        return "Unidentified module";
+
+    return moduleName;
+}
