@@ -40,17 +40,6 @@ namespace Detourer {
 
 #pragma region HOOKING
 
-    inline BOOL NewTransaction();
-    inline BOOL Commit();
-
-    inline BOOL AttachAll();
-    inline BOOL Attach(Module mod);
-    inline BOOL Attach(void** realFunc, void* hookedFunc);
-
-    inline BOOL DetachAll();
-    inline BOOL Detach(Module mod);
-    inline BOOL Detach(void** realFunc, void* hookedFunc);
-
     inline BOOL NewTransaction() {
         DBG_MB(L"NewTransaction()...", L"Detourer INFO");
         DetourTransactionBegin();
@@ -64,11 +53,9 @@ namespace Detourer {
         return true;
     }
 
-    inline BOOL AttachAll() {
-        DBG_MB(L"AttachAll()...", L"Detourer INFO");
-        for (Detourer::Module module : loadedModules) {
-            Attach(module);
-        }
+    inline BOOL Attach(void** realFunc, void* hookedFunc) {
+        DBG_MB(L"Attach(void**,void*)...", L"Detourer INFO");
+        DetourAttach(realFunc, hookedFunc);
         return true;
     }
 
@@ -78,17 +65,17 @@ namespace Detourer {
         return true;
     }
 
-    inline BOOL Attach(void** realFunc, void* hookedFunc) {
-        DBG_MB(L"Attach(void**,void*)...", L"Detourer INFO");
-        DetourAttach(realFunc, hookedFunc);
+    inline BOOL AttachAll() {
+        DBG_MB(L"AttachAll()...", L"Detourer INFO");
+        for (Detourer::Module module : loadedModules) {
+            Attach(module);
+        }
         return true;
     }
 
-    inline BOOL DetachAll() {
-        DBG_MB(L"DetachAll()...", L"Detourer INFO");
-        for (Detourer::Module module : loadedModules) {
-            Detach(module);
-        }
+    inline BOOL Detach(void** realFunc, void* hookedFunc) {
+        DBG_MB(L"Detach(void**,void*)...", L"Detourer INFO");
+        DetourDetach(realFunc, hookedFunc);
         return true;
     }
 
@@ -98,9 +85,11 @@ namespace Detourer {
         return true;
     }
 
-    inline BOOL Detach(void** realFunc, void* hookedFunc) {
-        DBG_MB(L"Detach(void**,void*)...", L"Detourer INFO");
-        DetourDetach(realFunc, hookedFunc);
+    inline BOOL DetachAll() {
+        DBG_MB(L"DetachAll()...", L"Detourer INFO");
+        for (Detourer::Module module : loadedModules) {
+            Detach(module);
+        }
         return true;
     }
 
