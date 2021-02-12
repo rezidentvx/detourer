@@ -3,10 +3,12 @@
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <OmitFramePointers>true</OmitFramePointers>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <ExceptionHandling>Async</ExceptionHandling>
+      <!--<ExceptionHandling>Async</ExceptionHandling>-->
+      <AdditionalOptions>/O1 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -17,7 +17,7 @@ namespace std {
 #ifdef _DEBUG
 #define DBGTEXT(text) TEXT(text)
 #else
-#define DBGTEXT(text) nullptr
+#define DBGTEXT(text) nullptr // TEXT("") ?
 #endif
 
 // If an attempt fails...
@@ -76,10 +76,6 @@ inline std::string ToHexStr(LPBYTE pData, size_t cbData) {
 	return buf;
 }
 
-HMODULE GetModuleAtAddress(LPVOID addr);
-std::string GetModuleNameStr(LPVOID addr);
-std::string GetModuleNameStr(HMODULE hmod);
-
 inline HMODULE GetModuleAtAddress(LPVOID addr) {
     /// Get list of modules in process
     DWORD cbNeeded;
@@ -102,15 +98,15 @@ inline HMODULE GetModuleAtAddress(LPVOID addr) {
     return NULL;
 }
 
-inline auto GetModuleNameStr(LPVOID addr) -> std::string {
-    HMODULE hmod = GetModuleAtAddress(addr);
-    return GetModuleNameStr(hmod);
-}
-
 inline std::string GetModuleNameStr(HMODULE hmod) {
     char moduleName[1024];
     if (!hmod || !GetModuleFileNameA(hmod, moduleName, 1024))
         return "Unidentified module";
 
     return moduleName;
+}
+
+inline std::string GetModuleNameStr(LPVOID addr) {
+    HMODULE hmod = GetModuleAtAddress(addr);
+    return GetModuleNameStr(hmod);
 }

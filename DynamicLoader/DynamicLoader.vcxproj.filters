@@ -33,13 +33,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourermodule.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(SolutionDir)\Includes\Detourer\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="comms.cpp">

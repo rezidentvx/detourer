@@ -3,13 +3,9 @@
 #include <map>
 #include <string>
 
-//namespace MemoryProtections {
-//    extern const std::map<DWORD, std::string> mProtects;
-//    std::string FlToStr(DWORD flProtect);
-//}
 namespace MemoryProtections
 {
-    const std::map<DWORD, std::string> mProtects = {
+    const std::map<const DWORD, const char*> mProtects = {
         {0x1, "PAGE_NOACCESS"},
         {0x2, "PAGE_READONLY"},
         {0x4, "PAGE_READWRITE"},
@@ -23,7 +19,7 @@ namespace MemoryProtections
         {0x400, "PAGE_WRITECOMBINE"},
         {0x40000000, "PAGE_TARGETS_NO_UPDATE"}
     };
-    std::string FlToStr(DWORD flProtect) {
+    inline std::string FlToStr(DWORD flProtect) {
         std::string flags;
         for (std::pair<DWORD, std::string> prot : mProtects) {
             if (flProtect & prot.first)

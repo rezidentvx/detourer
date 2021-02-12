@@ -1,4 +1,3 @@
-#ifndef DTR_CRYPTO
 #define DTR_CRYPTO
 
 #define DTR_BCRYPTENCRYPT
@@ -40,9 +39,9 @@ NTSTATUS WINAPI HookedBCryptEncrypt(BCRYPT_KEY_HANDLE hKey, PUCHAR pbInput, ULON
     return Real_BCryptEncrypt(hKey, pbInput, cbInput, pPaddingInfo, pbIV, cbIV, pbOutput, cbOutput, pcbResult, dwFlags);
 }
 
-namespace { Detourer::Module m(Real_BCryptEncrypt, HookedBCryptEncrypt); }
+static const Detourer::Module m(Real_BCryptEncrypt, HookedBCryptEncrypt);
 
-// Currently not implemented
+//// Currently not implemented
 //#pragma comment(lib,"ncrypt.lib")
 //
 //extern NTSTATUS(WINAPI* Real_NCryptEncrypt)(NCRYPT_KEY_HANDLE, PBYTE, DWORD, VOID*, PBYTE, DWORD, DWORD*, DWORD) = NCryptEncrypt;
@@ -66,4 +65,3 @@ namespace { Detourer::Module m(Real_BCryptEncrypt, HookedBCryptEncrypt); }
 //    const BYTE* pbToBeEncrypted, DWORD cbToBeEncrypted, BYTE* pbEncryptedBlob, DWORD* pcbEncryptedBlob);
 //
 //namespace { Detourer::Module m(Real_CryptEncryptMessage, HookedCryptEncryptMessage); }
-#endif

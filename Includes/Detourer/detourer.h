@@ -6,16 +6,16 @@
 
 namespace Detourer {
 
-    BOOL NewTransaction();
-    BOOL Commit();
+    inline BOOL NewTransaction();
+    inline BOOL Commit();
 
-    BOOL AttachAll();
-    BOOL Attach(Module mod);
-    BOOL Attach(void** realFunc, void* hookedFunc);
+    inline BOOL AttachAll();
+    inline BOOL Attach(Module mod);
+    inline BOOL Attach(void** realFunc, void* hookedFunc);
 
-    BOOL DetachAll();
-    BOOL Detach(Module mod);
-    BOOL Detach(void** realFunc, void* hookedFunc);
+    inline BOOL DetachAll();
+    inline BOOL Detach(Module mod);
+    inline BOOL Detach(void** realFunc, void* hookedFunc);
 
     inline BOOL NewTransaction() {
         DBG_MB(L"NewTransaction()...", L"Detourer INFO");

