@@ -18,7 +18,7 @@ This working alpha code, but can change at any time--Do not expect compatibility
 #### One-Time
 - [ ] Explore potential for global hooks
   - This would probably need to be adapted for driver use
-- [ ] Complete and further modularize payloads
+- [x] Complete and further modularize payloads
 - [ ] Configure payloads to interact well with each other
   - Ex. Don’t hook a WriteFile call when we’re trying to exfil data…
 - [ ] Add class to generate hook function based on mix/matched choice of:
