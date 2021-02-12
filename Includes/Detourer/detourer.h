@@ -1,10 +1,44 @@
 #pragma once
-//#include <detourerconfig.h>
-//#include <detoursstack.h>
-//#include <util.h>
-#include <detourermodule.h>
+#include <Windows.h>
+#include <Detours\detver.h>
+#include <Detours\detours.h>
+#include <vector>
+#include <util.h>
 
 namespace Detourer {
+
+#pragma region MODULES
+    class Module {
+    public:
+        void** _realFunc;
+        void* _hookedFunc;
+
+        inline Module(void** realFunc, void* hookedFunc);
+
+        template <typename T>
+        Module(T*& realFunc, void* hookedFunc) {
+            Module(&(PVOID&)realFunc, hookedFunc);
+        }
+    };
+
+    extern std::vector<Module> loadedModules;
+
+    inline Module::Module(void** realFunc, void* hookedFunc)
+        : _realFunc(realFunc),
+        _hookedFunc(hookedFunc) {
+        loadedModules.push_back(*this);
+        DBG_MB(L"Loaded module.", L"Detourer::Module(void*,void*)");
+    }
+
+    inline void AddModule(Module m) {
+        loadedModules.push_back(m);
+        DBG_MB((std::wstring(L"Pushed back") + std::to_wstring((ULONG_PTR)m._hookedFunc) + std::to_wstring((ULONG_PTR)m._realFunc)).c_str(), L"Detourer::AddModule(Module)");
+        DBG_MB((std::wstring(L"Modules loaded: ") + std::to_wstring(loadedModules.size())).c_str(), L"Detourer::AddModule(Module)");
+    }
+
+#pragma endregion
+
+#pragma region HOOKING
 
     inline BOOL NewTransaction();
     inline BOOL Commit();
@@ -69,4 +103,6 @@ namespace Detourer {
         DetourDetach(realFunc, hookedFunc);
         return true;
     }
+
+#pragma endregion
 }

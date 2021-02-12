@@ -1,7 +1,9 @@
 #define DTR_VIRTUALALLOC
 
-//#include <memoryprotections.h>
-#include <detourermodule.h>
+#ifdef _DEBUG
+#include <memoryprotections.h>
+#endif
+#include <detourer.h>
 
 extern auto Real_VirtualAlloc = VirtualAlloc;
 

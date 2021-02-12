@@ -34,26 +34,17 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <!-- <PrecompiledHeaderFile>main.h</PrecompiledHeaderFile> -->
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
     <IncludePath>$(ProjectDir);$(SolutionDir)\Includes\;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <!-- <ReplaceWildcardsInProjectItems>true</ReplaceWildcardsInProjectItems> -->
-    <!-- <ComputeCompileInputsTargets> -->
-		<!-- AddWildCardItems -->
-		<!-- $(ComputeCompileInputsTargets) -->
-	<!-- </ComputeCompileInputsTargets> -->
   </PropertyGroup>
   <ItemGroup Label="Headers">
-    <!-- <_WildCardClInclude Include="modules\payloads\build\*.h" /> -->
     <_WildCardClInclude Include="modules\wrappers\build\*.h" />
     <ClInclude Include="detourerconfig.h" />
-    <ClInclude Include="main.h" />
     <ClInclude Include="memoryprotections.h" />
   </ItemGroup>
   <ItemGroup Label="Source">
-    <!-- <_WildCardClCompile Include="modules\wrappers\build\*.cpp" /> -->
     <_WildCardClCompile Include="modules\payloads\build\*.cpp" />
     <ClCompile Include="dllmain.cpp" />
   </ItemGroup>

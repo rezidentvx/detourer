@@ -4,14 +4,11 @@
     <IncludePath>$(SolutionDir)\Includes\Detourer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup Label="Headers">
-    <ClInclude Include="$(SolutionDir)\Includes\Detourer\detourer.h" /> 
-    <ClInclude Include="$(SolutionDir)\Includes\Detourer\detourermodule.h" /> 
+    <ClInclude Include="$(SolutionDir)\Includes\Detourer\detourer.h" />
     <ClInclude Include="$(SolutionDir)\Includes\Detourer\util.h" />
   </ItemGroup>
   <ItemGroup Label="Source">
-    <!--<ClCompile Include="$(SolutionDir)\Includes\Detourer\detourer.cpp" />-->
-    <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourermodule.cpp" />
-    <!--<ClCompile Include="$(SolutionDir)\Includes\Detourer\util.cpp" />-->
+    <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourer.cpp" />
   </ItemGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)\properties\Link-Detours.props" />

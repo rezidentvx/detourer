@@ -1,6 +1,6 @@
 #define DTR_WRITEFILE
 
-#include <detourermodule.h>
+#include <detourer.h>
 
 extern auto Real_WriteFile = WriteFile;
 

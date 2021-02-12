@@ -2,7 +2,7 @@
 
 #define DTR_BCRYPTENCRYPT
 
-#include <detourermodule.h>
+#include <detourer.h>
 //  #include <Windows.h>
 //    #include <bcrypt.h>
 //    #include <ncrypt.h>

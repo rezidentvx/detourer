@@ -1,4 +1,4 @@
-#include "main.h"
+#include <detourer.h>
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD dwReason, LPVOID lpReserved)
 {

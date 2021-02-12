@@ -1,6 +1,6 @@
 #pragma once
 #include <detourerconfig.h>
-#include <windows.h>
+#include <Windows.h>
 #include <Psapi.h> // GetModuleInformation
 #include <string>
 
