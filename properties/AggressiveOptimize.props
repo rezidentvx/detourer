@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <EmbedManifest>false</EmbedManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalOptions>
+%(AdditionalOptions)
+<!--/favor:{blend | ATOM | AMD64 | INTEL64} --><!-- Optimize for a specific arch -->
+<!--/GA --><!-- (Optimize for Windows Application). IDK if this is good or bad for size. Do not use in DLL -->
+/guard:cf- <!-- (Don't) (Enable Control Flow Guard) -->
+/guard:ehcont- <!-- (Don't) (Enable EH Continuation Metadata) -->
+/Gw- <!-- (Don't) (Optimize Global Data). Use with /GL to collapse stuff -->
+<!--/LN --><!-- If CLR is used, no manifest is added. -->
+<!--/Qimprecise_fwaits --><!-- (Remove fwaits Inside Try Blocks). Inactive unless /fp:except, but oddly still unrecognized... -->
+/vd0 <!-- (Disable Construction Displacements). Increment this number until it works -->
+/vmg <!-- (Representation method). Class inheritance stuff. Prefer vmg over vmb (change /vms first) -->
+/vms <!-- (General Purpose Representation). Implementing class member pointers. Prefer vms > vmm > vmv -->
+/Zc:inline <!-- (Remove unreferenced COMDAT). Negated if /GL is on -->
+/Zc:implicitNoexcept <!-- Default to noexcept. This removes leftover exception handling -->
+      </AdditionalOptions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks><!-- (No /RTC switch) -->
+      <BufferSecurityCheck>false</BufferSecurityCheck><!-- /GS- -->
+      <CreateHotpatchableImage>false</CreateHotpatchableImage><!-- Don't add hotpatching buffer -->
+      <DebugInformationFormat>None</DebugInformationFormat><!-- No debugging info produced. None of /Z7, /Zi, or /ZI enabled -->
+      <!--<EnableEnhancedInstructionSet></EnableEnhancedInstructionSet>--><!-- /arch:[IA32|SSE|SSE2|AVX|AVX2|AVX512] -->
+      <ExceptionHandling>false</ExceptionHandling><!-- /EHa- -->
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed><!-- /Os -->
+      <FloatingPointExceptions>false</FloatingPointExceptions><!-- /fp- -->
+      <FunctionLevelLinking>true</FunctionLevelLinking><!-- /Gy -->
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion><!-- /Ob2 -->
+      <IntrinsicFunctions>false</IntrinsicFunctions><!-- /Oi- -->
+      <OmitFramePointers>true</OmitFramePointers><!-- /Oy -->
+      <Optimization>MinSpace</Optimization><!-- /O1 -->
+      <PreprocessorDefinitions>
+NDEBUG;
+_HAS_EXCEPTIONS=0; <!-- This is dangerous...disables/removes exception handling -->
+%(PreprocessorDefinitions)
+      </PreprocessorDefinitions>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo><!-- /GR- (Enable Run-Time Type Information) -->
+      <SDLCheck>false</SDLCheck><!-- /sdl- -->
+      <StringPooling>true</StringPooling><!-- /GF (Eliminate Duplicate Strings) -->
+      <WholeProgramOptimization>false</WholeProgramOptimization><!-- /GL- -->
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>
+%(AdditionalOptions)
+/brepro <!-- Kills timestamps and other unique things. Doesn't shrink stuff though. -->
+/nocoffgrpinfo
+<!--/CETCOMPAT:NO --><!-- Not compatible w/ CET Shadow Stack. IDK if this actually helps, so it's disabled -->
+/EMITPOGOPHASEINFO <!-- Suppress Profile-Guided Optimizations section in PE -->
+/FILEALIGN:4 
+<!--/HIGHENTROPYVA:NO --><!-- (Don't) (Support 64-Bit ASLR). TODO: Use only if building x64 -->
+<!--/LARGEADDRESSAWARE:NO --><!-- (Don't) (Handle Large Addresses). Ignored if using /DLL -->
+/LTCG:OFF <!-- Adds a bunch of junk if enabled... -->
+/NOASSEMBLY <!-- If CLR is enabled, it won't be used -->
+/SAFESEH:NO <!-- Prevent addition of handler table -->
+      </AdditionalOptions>
+      <AssemblyDebug>false</AssemblyDebug><!-- /ASSEMBLYDEBUG:DISABLE -->
+      <DataExecutionPrevention>false</DataExecutionPrevention><!-- /NXCOMPAT:NO -->
+      <EnableCOMDATFolding>true</EnableCOMDATFolding><!-- /OPT:ICF -->
+      <EnableUAC>false</EnableUAC><!-- /MANIFESTUAC:NO -->
+      <GenerateDebugInformation>false</GenerateDebugInformation><!-- /DEBUG:NONE -->
+      <GenerateManifest>false</GenerateManifest><!-- /MANIFEST:NO -->
+      <LinkIncremental>No</LinkIncremental><!-- /INCREMENTAL:NO -->
+      <OptimizeReferences>true</OptimizeReferences><!-- /OPT:REF -->
+      <RandomizedBaseAddress>false</RandomizedBaseAddress><!-- /DYNAMICBASE:NO (Remove .reloc stuff)--> 
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

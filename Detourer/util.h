@@ -21,18 +21,18 @@ namespace std {
 #endif
 
 // If an attempt fails...
-#if ASSERT_SUCCESS_LEVEL == 2 // throw caller
-#define TRY_ASSERT_SUCCESS(...) throw // Throw if bad return value
-#define TRY(OPERATION, desVal) TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)) // Allow caller to throw
-
-#elif ASSERT_SUCCESS_LEVEL == 1 // Make the caller return true (DANGEROUS if true is a bad return value in caller) by catching a throw to return true
-#define TRY_ASSERT_SUCCESS(...) throw // Throw if bad return value
-#define TRY(OPERATION, desVal) try { TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)); } catch (...) { return true; } // Caller returns true, can't throw
-
-#else // Act like it never happened & let caller handle it
-#define TRY_ASSERT_SUCCESS(...) return true // Return that there was an error (true)
-#define TRY(OPERATION, desVal) try { TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)); } catch (...) {} // Caller carries on, can't throw
-#endif
+//#if ASSERT_SUCCESS_LEVEL == 2 // throw caller
+//#define TRY_ASSERT_SUCCESS(...) throw // Throw if bad return value
+//#define TRY(OPERATION, desVal) TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)) // Allow caller to throw
+//
+//#elif ASSERT_SUCCESS_LEVEL == 1 // Make the caller return true (DANGEROUS if true is a bad return value in caller) by catching a throw to return true
+//#define TRY_ASSERT_SUCCESS(...) throw // Throw if bad return value
+//#define TRY(OPERATION, desVal) try { TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)); } catch (...) { return true; } // Caller returns true, can't throw
+//
+//#else // Act like it never happened & let caller handle it
+//#define TRY_ASSERT_SUCCESS(...) return true // Return that there was an error (true)
+//#define TRY(OPERATION, desVal) try { TRY1(OPERATION, desVal, DBGTEXT(#OPERATION)); } catch (...) {} // Caller carries on, can't throw
+//#endif
 
 #ifdef _DEBUG
 
@@ -58,14 +58,14 @@ __forceinline void DBG_FAIL(LPCTSTR operation = TEXT(""), LPCTSTR location = TEX
 #define DBG_FAIL(...) (void)0
 #endif
 
-template<typename T>
-__forceinline bool TRY1(T retVal, T desVal, LPCTSTR operation = DBGTEXT("")) {
-	if (retVal != desVal) {
-		DBG_FAIL(operation);
-		TRY_ASSERT_SUCCESS();
-	}
-	return false;
-}
+//template<typename T>
+//__forceinline bool TRY1(T retVal, T desVal, LPCTSTR operation = DBGTEXT("")) {
+//	if (retVal != desVal) {
+//		DBG_FAIL(operation);
+//		TRY_ASSERT_SUCCESS();
+//	}
+//	return false;
+//}
 
 inline std::string ToHexStr(LPBYTE pData, size_t cbData) {
 	char* buf = new char[cbData * 2 + 1];

@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DynamicLoader", "DynamicLoader\DynamicLoader.vcxproj", "{3CF58685-6915-40A7-8B59-7219C4E199EF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE} = {1EA3C475-8627-4F64-AC40-42FD1BEF91CE}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Detours", "Detours\Detours.vcxproj", "{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +26,14 @@ Global
 		{3CF58685-6915-40A7-8B59-7219C4E199EF}.Release|x64.Build.0 = Release|x64
 		{3CF58685-6915-40A7-8B59-7219C4E199EF}.Release|x86.ActiveCfg = Release|Win32
 		{3CF58685-6915-40A7-8B59-7219C4E199EF}.Release|x86.Build.0 = Release|Win32
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Debug|x64.ActiveCfg = Debug|x64
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Debug|x64.Build.0 = Debug|x64
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Debug|x86.ActiveCfg = Debug|Win32
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Debug|x86.Build.0 = Debug|Win32
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Release|x64.ActiveCfg = Release|x64
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Release|x64.Build.0 = Release|x64
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Release|x86.ActiveCfg = Release|Win32
+		{1EA3C475-8627-4F64-AC40-42FD1BEF91CE}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

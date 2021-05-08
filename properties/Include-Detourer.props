@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)\Includes\Detourer;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Detourer;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup Label="Headers">
-    <ClInclude Include="$(SolutionDir)\Includes\Detourer\detourer.h" />
-    <ClInclude Include="$(SolutionDir)\Includes\Detourer\util.h" />
+    <ClInclude Include="$(SolutionDir)\Detourer\detourer.h" />
+    <ClInclude Include="$(SolutionDir)\Detourer\util.h" />
   </ItemGroup>
   <ItemGroup Label="Source">
-    <ClCompile Include="$(SolutionDir)\Includes\Detourer\detourer.cpp" />
+    <ClCompile Include="$(SolutionDir)\Detourer\detourer.cpp" />
   </ItemGroup>
   <ImportGroup Label="PropertySheets">
     <Import Project="$(SolutionDir)\properties\Link-Detours.props" />

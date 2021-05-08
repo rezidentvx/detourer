@@ -1,9 +1,11 @@
 #pragma once
 #include <Windows.h>
-#include <Detours\detver.h>
-#include <Detours\detours.h>
 #include <vector>
-#include <util.h>
+#include <Detours/detver.h>
+#include <Detours/detours.h>
+#include <Detourer/util.h>
+
+#include "AggressiveOptimize.h"
 
 namespace Detourer {
 

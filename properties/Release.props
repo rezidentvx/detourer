@@ -2,13 +2,13 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <!--<WholeProgramOptimization>true</WholeProgramOptimization>-->
     <OmitFramePointers>true</OmitFramePointers>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <!--<ExceptionHandling>Async</ExceptionHandling>-->
-      <AdditionalOptions>/O1 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /O1 /EHsc</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

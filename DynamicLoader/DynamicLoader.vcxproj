@@ -25,22 +25,27 @@
     <RootNamespace>DynamicLoader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <ImportGroup Label="ExtensionSettings" />
+  <!-- <ImportGroup Label="ExtensionSettings" /> -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(SolutionDir)\properties\Base.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <Import Project="$(SolutionDir)\properties\$(Configuration).props" />
-  <Import Project="$(SolutionDir)\properties\Include-Detourer.props" />
+  <ImportGroup Label="PropertySheets">
+	<Import Project="$(SolutionDir)\properties\$(Configuration).props" Condition="'$(Configuration)'=='Debug'"/>
+	<Import Project="$(SolutionDir)\properties\AggressiveOptimize.props" Condition="'$(Configuration)'=='Release'"/>
+	<Import Project="$(SolutionDir)\properties\Include-Detourer.props" />
+  </ImportGroup>
   <ItemDefinitionGroup>
     <ClCompile>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup>
-    <IncludePath>$(ProjectDir);$(SolutionDir)\Includes\;$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir);$(SolutionDir);$(IncludePath);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemGroup Label="Headers">
     <_WildCardClInclude Include="modules\wrappers\build\*.h" />
+    <ClInclude Include="AggressiveOptimize.h" />
     <ClInclude Include="detourerconfig.h" />
     <ClInclude Include="memoryprotections.h" />
   </ItemGroup>
